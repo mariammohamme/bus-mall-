@@ -3,20 +3,24 @@
 var oneimgElement = document.getElementById('one-img');
 var twoimgElement = document.getElementById('two-img');
 var threeimgElement = document.getElementById('three-img');
+var divimg = document.getElementById('images-div');
+var showResult = document.getElementById('results-list');
+var maxSubmit = document.getElementById('submit');
 var maxAttempts = 15;
 var userAttemptsCounter = 0;
 
 var oneImageIndex;
 var twoImageIndex;
 var threeImageIndex;
-
+// construcore
 function GoatImage(name,source){
   this.name = name;
   this.source = source;
   this.votes = 0;
+  var view = 0 ;
   GoatImage.prototype.allImages.push(this);
 }
-
+// object 
 GoatImage.prototype.allImages = [];
 new GoatImage('bag:','../img/bag.jpg');// 0
 new GoatImage('banana:','../img/banana.jpg');// 1
@@ -44,39 +48,37 @@ console.log(GoatImage.prototype.allImages);
 
 renderTwoRandomImages();
 
-oneimgElement.addEventListener('click',handleUserClick);
-twoimgElement.addEventListener('click',handleUserClick);
-threeimgElement.addEventListener('click',handleUserClick);
+divimg.addEventListener('click',handleUserClick);
+showResult.addEventListener('click', showButton);
+maxSubmit.addEventListener('submit', setmaxSubmit);
 
 function handleUserClick(event){
   userAttemptsCounter++;
 
-  if(userAttemptsCounter <= maxAttempts){
+  if(userAttemptsCounter < maxAttempts){
     if(event.target.id === 'one-img'){
+      userAttemptsCounter++;
       GoatImage.prototype.allImages[twoImageIndex].votes++;
+      renderTwoRandomImages();
     } else if (event.target.id ==='two-img') {
+      userAttemptsCounter++;
       GoatImage.prototype.allImages[threeImageIndex].votes++;
+      renderTwoRandomImages();
     }else if (event.target.id==='three-img') {
+      userAttemptsCounter++;
         GoatImage.prototype.allImages[oneImageIndex].votes++;
+        renderTwoRandomImages();
       }
     renderTwoRandomImages();
 
-  } else {
+     } else {
     // handle end of voting
-    var resultsList = document.getElementById('results-list');
-    var goatResult;
-    for(var i = 0; i < GoatImage.prototype.allImages.length; i++){
-      goatResult = document.createElement('li');
-      goatResult.textContent = GoatImage.prototype.allImages[i].name + ': '+ GoatImage.prototype.allImages[i].votes + ' votes';
-      resultsList.appendChild(goatResult);
+    divimg.removeEventListener('click', handleUserClick);
+    showResult.disabled=false;
+
     }
-    oneimgElement.removeEventListener('click',handleUserClick);
-    twoimgElement.removeEventListener('click',handleUserClick);
-    threeimgElement.removeEventListener('click',handleUserClick);
 
   }
-
-}
 
 
 function renderTwoRandomImages(){
@@ -91,11 +93,30 @@ function renderTwoRandomImages(){
   console.log(threeimgElement);
 
   threeimgElement.src = GoatImage.prototype.allImages[threeImageIndex].source;
+  GoatImage.prototype.allImages.view++;
   oneimgElement.src = GoatImage.prototype.allImages[oneImageIndex].source;
+  GoatImage.prototype.allImages.view++;
   twoimgElement.src = GoatImage.prototype.allImages[twoImageIndex].source;
+  GoatImage.prototype.allImages.view++;
+
 }
 
 
 function generateRandomIndex(){
   return Math.floor(Math.random() * (GoatImage.prototype.allImages.length));
+}
+function showButton(){
+  var resultsList = document.getElementById('results-list');
+  var goatResult;
+  for(var i = 0; i < GoatImage.prototype.allImages.length; i++){
+    goatResult = document.createElement('li');
+    goatResult.textContent = GoatImage.prototype.allImages[i].name + ': '+ GoatImage.prototype.allImages[i].votes + ' votes';
+    resultsList.appendChild(goatResult);
+}
+}
+function setmaxSubmit(event){
+  console.log(event);
+  event.preventDefault();
+  maxSubmit=event.target.round.target;
+
 }

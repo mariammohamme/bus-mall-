@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,7 +13,12 @@
   </header>
   <main>
     <p>HELLO THIS IS YOUR CHANCE TO voting , KEEP UP: </p>
-    
+    <form action="">
+      <label for="round">choose the number of round</label>
+      <input name="round" id="round" type="number">
+      <input type="submit" value="set round">
+  
+    </form>
     <div id="images-div">
       <img id="one-img" src="" alt="">
       <img id="two-img" src="" alt="">
@@ -20,9 +26,8 @@
       
     </div>
 
-    <ul id="results-list">
-    </ul>
-    <button type="button">"vote"</button>
+    <ul id="results-list"> </ul>
+    <input type="submit" id="results-list1" name="results-list1" disabled>
 
   </main>
   <footer>
